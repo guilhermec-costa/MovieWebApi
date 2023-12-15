@@ -1,2 +1,2 @@
 -- SQLite
-select * from Genres;
+select * from Actors;

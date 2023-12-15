@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using EFCoreIntroduction.DBContext;
 using EFCoreIntroduction.Entities;
 using EFCoreIntroduction.DTOs;
+using AutoMapper;
 
 
 namespace EFCoreIntroduction.Controllers
@@ -12,17 +13,32 @@ namespace EFCoreIntroduction.Controllers
     public class GenresController : ControllerBase
     {
         private readonly DataContext _ctx;
-        public GenresController(DataContext ctx)
+        private readonly IMapper _mapper;
+        public GenresController(DataContext ctx, IMapper mapper)
         {
             _ctx = ctx;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostGenre(GenreCreationDTO genre)
+        public async Task<ActionResult> PostGenre(GenreCreationDTO genreCreationDTO)
         {
-            _ctx.Add(genre);
+            var genre = _mapper.Map<Genre>(genreCreationDTO);
+            _ctx.Add(genre);// tracks the given entity
             await _ctx.SaveChangesAsync();
             return Ok();
         }
+
+
+        [HttpPost("several")]
+        public async Task<ActionResult> PostGenre(GenreCreationDTO[] genreCreationDTOs)
+        {
+            var genres = _mapper.Map<Genre[]>(genreCreationDTOs);
+            _ctx.AddRange(genres);
+            await _ctx.SaveChangesAsync();
+            return Ok();
+        }
+
+
     }
 }

@@ -8,6 +8,7 @@ namespace EFCoreIntroduction.Entities.Configurations
         public void Configure(EntityTypeBuilder<Genre> builder)
         {
             builder.HasKey(g => g.Id);
+            builder.HasIndex(g => g.Name).IsUnique(true);
         }
     }
 }

@@ -7,5 +7,6 @@ namespace EFCoreIntroduction.DTOs
         public string Name { get; set; }
         public decimal Fortune { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public List<int> Genres = new();
     }
 }

@@ -1,4 +1,5 @@
 using EFCoreIntroduction.DBContext;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

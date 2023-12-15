@@ -3,6 +3,7 @@ using EFCoreIntroduction.DBContext;
 using EFCoreIntroduction.Entities;
 using EFCoreIntroduction.DTOs;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace EFCoreIntroduction.Controllers
@@ -37,6 +38,12 @@ namespace EFCoreIntroduction.Controllers
             _ctx.AddRange(genres);
             await _ctx.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Genre>>> GetGenres()
+        {
+            return await _ctx.Genres.ToListAsync();
         }
 
 

@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using EFCoreIntroduction.Entities;
-using System.Net;
 using System.Reflection;
 
 namespace EFCoreIntroduction.DBContext

@@ -46,6 +46,57 @@ namespace EFCoreIntroduction.Controllers
             return await _ctx.Genres.ToListAsync();
         }
 
+        [HttpPut("{id:int}/name2")]
+        public async Task<ActionResult> Put(int id)
+        {
+            var genre = await context.Genres.FirstOrDefaultAsync(g => g.Id == id);
 
+            if (genre is null)
+            {
+                return NotFound();
+            }
+
+            genre.Name = genre.Name + "2";
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, GenreCreationDTO genreCreationDTO)
+        {
+            var genre = mapper.Map<Genre>(genreCreationDTO);
+            genre.Id = id;
+            context.Update(genre);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{id:int}/modern")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var removedRows = await context.Genres.Where(g => g.Id == id).ExecuteDeleteAsync();
+
+            if (removedRows == 0)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id:int}/oldway")]
+        public async Task<ActionResult> DeleteOldWay(int id)
+        {
+            var genre = await context.Genres.FirstOrDefaultAsync(g => g.Id == id);
+
+            if (genre is null)
+            {
+                return NotFound();
+            }
+
+            context.Remove(genre);
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }

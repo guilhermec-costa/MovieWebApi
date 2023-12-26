@@ -42,5 +42,18 @@ namespace EFCoreIntroduction.Controllers
             return Ok();
 
         }
+
+        [HttpDelete("{id:int}/modern")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var removedRows = await context.Movies.Where(g => g.Id == id).ExecuteDeleteAsync();
+
+            if (removedRows == 0)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }
